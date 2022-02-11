@@ -5,12 +5,12 @@ WITH all_products AS ( -- count all products per transaction
     FROM transactions
     GROUP BY transaction_id, month
 )
-, electronic_products AS ( -- count electronic products per transaction
+, electronic_products AS ( -- count phones and computers per transaction
     SELECT t.transaction_id
           , count(t.product_id) AS count_electronic_products
     FROM transactions t 
     JOIN category c ON t.category_id = c.category_id
-    WHERE c.category_name = 'ELECTRONICS'
+    WHERE c.category_name = 'PHONE' or c.category_name = 'COMPUTER'
     GROUP BY t.transaction_id
 )
 , ratio_electronic_to_all AS ( -- calculate ratio of electronic to all products per transaction
